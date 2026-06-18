@@ -42,16 +42,16 @@ if (item.id === room.itemToSolve) {
   if (rewardItem) {
     addItem(rewardItem);
   }
-
-  if (nextRoom) {
-    navigate(`/room/${nextRoom.roomPath}`);
-  }
 }
 
 };
 
 return (
 <>
+<button onClick={() => navigate("/")}>
+  Back to Home
+</button>
+
 {room.roomName}
 
   <img
@@ -76,6 +76,16 @@ return (
   <p>
     Solved: {roomIsSolved ? "Yes" : "No"}
   </p>
+
+  {roomIsSolved && nextRoom && (
+  <button
+    onClick={() =>
+      navigate(`/room/${nextRoom.roomPath}`)
+    }
+  >
+    Go to {nextRoom.roomName}
+  </button>
+)}
 
   {!roomIsSolved && (
     <>
