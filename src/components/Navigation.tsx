@@ -3,7 +3,7 @@ import rooms from "../data/rooms.json";
 
 const Navigation = () => {
     return (
-      <nav>
+      <nav className="navigation">
         {rooms.map((room) => (
           <Link
             key={room.id}

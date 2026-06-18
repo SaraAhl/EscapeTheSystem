@@ -2,12 +2,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import rooms from "../data/rooms.json";
 import items from "../data/items.json";
 import { useInventory } from "../context/InventoryContext";
+import { useState } from "react";
 
 const RoomPage = () => {
 const { roomPath } = useParams();
+
 const navigate = useNavigate();
 
 const { inventory, addItem } = useInventory();
+
+const [exitSolved, setExitSolved] = useState(false);
 
 const room = rooms.find(
 (room) => room.roomPath === roomPath
@@ -21,9 +25,12 @@ const itemNeeded = items.find(
 (item) => item.id === room.itemToSolve
 );
 
-const roomIsSolved = inventory.some(
-(item: any) => item.id === room.itemToAdd
-);
+const roomIsSolved =
+  room.itemToAdd === null
+    ? exitSolved
+    : inventory.some(
+        (item: any) => item.id === room.itemToAdd
+      );
 
 const currentRoomIndex = rooms.findIndex(
 (r) => r.id === room.id
@@ -35,6 +42,12 @@ const handleUseItem = (item: any) => {
 if (roomIsSolved) return;
 
 if (item.id === room.itemToSolve) {
+
+  if (room.itemToAdd === null) {
+    setExitSolved(true);
+    return;
+  }
+
   const rewardItem = items.find(
     (i) => i.id === room.itemToAdd
   );
@@ -47,12 +60,12 @@ if (item.id === room.itemToSolve) {
 };
 
 return (
-<>
+  <div className="room-page">
 <button onClick={() => navigate("/")}>
   Back to Home
 </button>
 
-{room.roomName}
+<h1>{room.roomName}</h1>
 
   <img
     src={
@@ -101,7 +114,7 @@ return (
       ))}
     </>
   )}
-</>
+</div>
 
 );
 };
