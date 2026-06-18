@@ -3,11 +3,13 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 0.5rem;
+  
+    background-color: #374151;
+    color: white;
   }
   
   button:hover {
-    transform: translateY(-2px);
+    background-color: #4b5563;
   }
 
   .start-game-btn {
